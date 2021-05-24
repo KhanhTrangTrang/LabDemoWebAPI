@@ -1,0 +1,57 @@
+﻿
+@model DemoLabModels.Employee
+@{
+    ViewData["Title"] = "DetailUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="w-100">
+    <div class="mt-4 mb-4 d-flex justify-content-between">
+        <div>
+            Biên soạn thông tin nhân viên
+        </div>
+        <div>
+            <a type="button" class="btn btn-primary" asp-controller="Home" asp-action="Logout">Log out</a>
+        </div>
+    </div>
+    <form method="post" asp-action="EditUser">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="text-danger mt-4 mb-4">@ViewBag.Message</div>
+        <div class="d-flex justify-content-md-start p-1">
+            <label asp-for="Id" class="w-25">ID</label>
+            <input asp-for="Id" readonly class="w-50" />
+        </div>
+        <div class="d-flex justify-content-md-start p-1">
+            <label asp-for="Name" class="w-25">Tên</label>
+            <input asp-for="Name" class="w-50" />
+        </div>
+        <div class="d-flex justify-content-md-start p-1">
+            <span asp-validation-for="Name" hidden class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-md-start p-1">
+            <label asp-for="Email" class="w-25">Email</label>
+            <input asp-for="Email" class="w-50" />
+        </div>
+        <div class="d-flex justify-content-md-start p-1">
+            <span asp-validation-for="Email" hidden class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-md-start p-1">
+            <label asp-for="Tel" class="w-25">Tel</label>
+            <input asp-for="Tel" class="w-50" />
+        </div>
+        <div class="d-flex justify-content-between p-1">
+            <span asp-validation-for="Tel" hidden class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-md-center p-1">
+            <input type="submit" class="btn btn-primary mx-1" value="Update" />
+            <a type="button" class="btn btn-danger mx-1" asp-action="DeleteUser" asp-route-id="@Model.Id" )">Delete</a>
+            <a type="button" class="btn btn-primary mx-1" asp-action="Index" )">Back</a>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts
+{
+    @{<partial name="_ValidationScriptsPartial" />}
+}

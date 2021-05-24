@@ -1,0 +1,181 @@
+﻿
+@model DemoLabModels.Employee
+@{
+    ViewData["Title"] = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mt-2 mb-2">
+    <a type="button" class="btn btn-primary float-right mr-3 mt-3" asp-controller="Home" asp-action="Logout" )">Log out</a>
+</div>
+@{ string actionResult = ViewBag.Case; }
+@if (@actionResult.CompareTo("add") == 0) @*add*@
+{
+<div class="w-100 border border-dark p-3 rounded">
+    <form method="post" asp-action="AddUserPost">
+        <div class="mt-2 mb-2">
+            <div>Đăng kí nhân viên mới</div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="text-danger mt-4 mb-4">@ViewBag.AddError</div>
+        <div class="row">
+            <div class="col-2">
+                <label asp-for="Name" class="float-right">Tên</label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Name" value="@ViewBag.AddName" class="w-50" />
+            </div>
+        </div>
+        <div>
+            <span asp-validation-for="Name" hidden class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label asp-for="Email" class="float-right">Email</label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Email" value="@ViewBag.AddEmail" class="w-50" />
+            </div>
+        </div>
+        <div>
+            <span asp-validation-for="Email" hidden class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label asp-for="Tel" class="float-right">Tel</label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Tel" value="@ViewBag.AddTel" class="w-50" />
+            </div>
+        </div>
+        <div>
+            <span asp-validation-for="Tel" hidden class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-start mt-2">
+            <input type="submit" class="btn btn-primary  mx-1 w-25" value="Register" />
+            <a type="button" class="btn btn-primary w-25" asp-action="Index" )">Back</a>
+        </div>
+    </form>
+</div>
+}
+@if (@actionResult.CompareTo("edit") == 0) @*Edit*@
+{
+<div class="w-100 border border-dark p-3 rounded">
+    <div>
+        <div>
+            Xác nhận thông tin
+        </div>
+        <div>
+            Ấn nút OK để ghi thông tin vào DB
+        </div>
+    </div>
+    <form class="p-3" method="post" asp-action="EditUserPost">
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Id" class="float-right">ID</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Id" class="w-50">@Model.Id</label>
+            </div>
+        </div>
+        <input asp-for="Id" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Name" class="float-right">Tên</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Name" class="w-50">@Model.Name</label>
+            </div>
+        </div>
+        <input asp-for="Name" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Email" class="float-right">Email</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Email" class="w-50">@Model.Email</label>
+            </div>
+        </div>
+        <input asp-for="Email" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Tel" class="float-right">Tel</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Tel" class="w-50">@Model.Tel</label>
+            </div>
+        </div>
+        <input asp-for="Tel" hidden class="w-50" />
+        <div class="d-flex justify-content-md-start p-1">
+            <input type="submit" class="btn btn-primary mx-1" value="OK" />
+            <a type="button" class="btn btn-primary mx-1" asp-action="Back" asp-route-id="@Model.Id" )">Back</a>
+        </div>
+
+    </form>
+</div>
+}
+@if (@actionResult.CompareTo("delete") == 0) @*Delete*@
+{
+<div class="w-100 border border-dark p-3 rounded">
+
+    <div>
+        <div>
+            Xác nhận thông tin
+        </div>
+        <div>
+            Ấn nút Delete để xóa thông tin từ DB
+        </div>
+    </div>
+    <form class="p-3" method="post" asp-action="DeleteUserPost">
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Id" class="float-right">ID</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Id" class="w-50">@Model.Id</label>
+            </div>
+        </div>
+        <input asp-for="Id" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Name" class="float-right">Tên</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Name" class="w-50">@Model.Name</label>
+            </div>
+        </div>
+        <input asp-for="Name" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Email" class="float-right">Email</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Email" class="w-50">@Model.Email</label>
+            </div>
+        </div>
+        <input asp-for="Email" hidden class="w-50" />
+        <div class="row">
+            <div class="col-2 border">
+                <label asp-for="Tel" class="float-right">Tel</label>
+            </div>
+            <div class="col-6 border">
+                <label asp-for="Tel" class="w-50">@Model.Tel</label>
+            </div>
+        </div>
+        <input asp-for="Tel" hidden class="w-50" />
+        <div class="d-flex justify-content-start p-1">
+            <input type="submit" class="btn btn-danger mx-1" value="Delete" />
+            <a type="button" class="btn btn-primary" asp-action="Back" asp-route-id="@Model.Id" )">Back</a>
+        </div>
+    </form>
+</div>
+}
+
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

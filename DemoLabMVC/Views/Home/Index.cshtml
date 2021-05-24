@@ -1,0 +1,30 @@
+﻿@model LabDemoWebASPMVC.Models.Admin
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mt-4 mb-4">Hãy nhập LoginID và Password</div>
+<div class="text-danger mt-4 mb-4">@ViewBag.Message</div>
+<div class="w-50 border border-dark p-3 rounded">
+    <form method="post" asp-action="Login">
+        <div class="d-flex justify-content-between p-1">
+            <label class="w-50">ID:</label>
+            <input type="text" class="w-100" asp-for="Id">
+        </div>
+        <div class="d-flex justify-content-between p-1">
+            <label class="w-50">Password:</label>
+            <input type="password" class="w-100" asp-for="Password">
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+            <input type="submit" class="btn btn-primary w-25" value="Login">
+        </div>
+
+    </form>
+</div>
+
+@section Scripts 
+{
+    @{ <partial name="_ValidationScriptsPartial" />}
+}
+

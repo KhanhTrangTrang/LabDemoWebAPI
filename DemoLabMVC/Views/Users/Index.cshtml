@@ -1,0 +1,144 @@
+﻿@model PaginatedList<DemoLabModels.Employee>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between p-1">
+    <label>Tạo mới nhân viên</label>
+    <a ttype="button" class="btn btn-primary p-1 mb-1 float-right w-25" asp-action="AddUser">Add</a>
+    <a ttype="button" class="btn btn-primary p-1 mb-1 float-right w-25" asp-controller="Home" asp-action="Logout">Log out</a>
+</div>
+
+<div class="mt-4 mb-4">Tìm kiếm nhân viên bằng tên. Nếu không có điều kiện, thì hiển thị toàn bộ</div>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<div class="text-danger mt-4 mb-4">@ViewBag.Message</div>
+
+@if (Model.Count() > 0)
+{
+    <table class="table mt-4 border">
+        <thead>
+            <tr>
+                <th class="border" scope="col">Id</th>
+                <th class="border" scope="col">Name</th>
+                <th class="border" scope="col">Email</th>
+                <th class="border" scope="col">Tel</th>
+                <th class="border" scope="col">###</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <th class="border" scope="row">@obj.Id</th>
+                    <td class="border">@obj.Name</td>
+                    <td class="border">@obj.Email</td>
+                    <td class="border">@obj.Tel</td>
+                    <td class="border">
+                        <a type="button" class="btn btn-primary" asp-action="DetailUser" asp-route-id="@obj.Id" )">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@{
+    var prev3Disabled = !Model.HasPreviousPage ? "disabled" : "";
+    var next3Disabled = !Model.HasNextPage ? "disabled" : "";
+}
+Page @(Model.TotalPages < Model.PageIndex ? 0 : Model.PageIndex) of @Model.TotalPages
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 3)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prev3Disabled">
+    <<
+</a>
+@if (Model.TotalPages <= 3)
+{
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@i"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default">
+            @i
+        </a>
+    }
+}
+else
+{
+    @if (Model.PageIndex == 1)
+    {
+        @for (int i = 1; i <= 3; i++)
+        {
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@i"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default">
+                @i
+            </a>
+        }
+    }
+    @if (Model.PageIndex == Model.TotalPages)
+    {
+        @for (int i = Model.TotalPages - 2; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@i"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default">
+                @i
+            </a>
+        }
+    }
+    @if (Model.PageIndex > 1 && Model.PageIndex < Model.TotalPages)
+    {
+        @for (int i = Model.PageIndex - 1; i <= Model.PageIndex + 1; i++)
+        {
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@i"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default">
+                @i
+            </a>
+        }
+    }
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 3)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @next3Disabled">
+    >>
+</a>
+
+
+
+
+@*@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+
+
+
+
+
+
+
+
