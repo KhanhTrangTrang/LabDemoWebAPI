@@ -41,7 +41,7 @@ namespace LabDemoWebASPMVC.Controllers
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44325/api/employees");
+                HttpResponseMessage response = await client.GetAsync("http://localhost:8098/api/employees");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 IEnumerable<Employee> myList = JsonConvert.DeserializeObject<List<Employee>>(responseBody);
@@ -119,7 +119,7 @@ namespace LabDemoWebASPMVC.Controllers
         {
             JsonContent content = JsonContent.Create(user);
 
-            HttpResponseMessage response = await client.PutAsync("https://localhost:44325/api/employees", content);
+            HttpResponseMessage response = await client.PutAsync("http://localhost:8098/api/employees", content);
             // Case change email
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
@@ -149,7 +149,7 @@ namespace LabDemoWebASPMVC.Controllers
         {
             JsonContent content = JsonContent.Create(user);
 
-            HttpResponseMessage response = await client.PostAsync("https://localhost:44325/api/employees", content);
+            HttpResponseMessage response = await client.PostAsync("http://localhost:8098/api/employees", content);
             // Case change email
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
@@ -178,7 +178,7 @@ namespace LabDemoWebASPMVC.Controllers
         public async Task<IActionResult> EditUserPostAsync(Employee user)
         {
             JsonContent content = JsonContent.Create(user);
-            HttpResponseMessage response = await client.PutAsync(string.Format("https://localhost:44325/api/employees/{0}", user.Id), content);
+            HttpResponseMessage response = await client.PutAsync(string.Format("http://localhost:8098/api/employees/{0}", user.Id), content);
             TempData["Result"] = "Updat thông tin thành công";
             return RedirectToAction("Result");
         }
@@ -197,7 +197,7 @@ namespace LabDemoWebASPMVC.Controllers
         public async Task<IActionResult> DeleteUserPostAsync(Employee user)
         {
             JsonContent content = JsonContent.Create(user);
-            HttpResponseMessage response = await client.DeleteAsync(string.Format("https://localhost:44325/api/employees/{0}", user.Id));
+            HttpResponseMessage response = await client.DeleteAsync(string.Format("http://localhost:8098/api/employees/{0}", user.Id));
             TempData["Result"] = "Delete thông tin thành công";
             return RedirectToAction("Result");
         }
@@ -219,7 +219,7 @@ namespace LabDemoWebASPMVC.Controllers
                 ViewBag.Message = TempData["edit"].ToString();
                 TempData.Remove("edit");
             }
-            HttpResponseMessage response = await client.GetAsync(string.Format("https://localhost:44325/api/employees/{0}", id));
+            HttpResponseMessage response = await client.GetAsync(string.Format("http://localhost:8098/api/employees/{0}", id));
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Employee>(responseBody);
@@ -304,7 +304,7 @@ namespace LabDemoWebASPMVC.Controllers
             try
             {
                 //var result = _db.Users.SingleOrDefault(b => b.Id == id);
-                HttpResponseMessage response = await client.GetAsync(string.Format("https://localhost:44325/api/employees/{0}", id));
+                HttpResponseMessage response = await client.GetAsync(string.Format("http://localhost:8098/api/employees/{0}", id));
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Employee>(responseBody);

@@ -28,6 +28,15 @@ namespace DemoLabWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DemoLabWebAPI", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200",
+                                            "http://www.contoso.com").AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +48,8 @@ namespace DemoLabWebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoLabWebAPI v1"));
             }
-
+            app.UseCors();
+            app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
 
             app.UseRouting();

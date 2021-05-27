@@ -101,8 +101,7 @@ namespace DemoLabWebAPI.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
 
         // POST: api/Employees
@@ -154,8 +153,7 @@ namespace DemoLabWebAPI.Controllers
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
-
-            return NoContent();
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
 
         /// <summary>Kiểm tra sự tồn tại của nhân viên trong database</summary>
